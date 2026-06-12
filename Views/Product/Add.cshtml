@@ -1,0 +1,88 @@
+@model Tuan3.Models.Product
+
+@{
+    ViewData["Title"] = "Thêm Sản Phẩm Mới";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none">Sản phẩm</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Thêm sản phẩm</li>
+                </ol>
+            </nav>
+
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="bg-primary text-white p-4">
+                    <h2 class="fw-bold mb-0">Thêm Sản phẩm Mới</h2>
+                    <p class="text-white-50 mb-0">Nhập thông tin chi tiết để thêm sản phẩm mới vào cửa hàng.</p>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <form asp-action="Add" method="post" enctype="multipart/form-data" class="needs-validation">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <!-- Product Name -->
+                        <div class="form-floating mb-4">
+                            <input asp-for="Name" class="form-control rounded-3 border-secondary-subtle" placeholder="Tên sản phẩm" required />
+                            <label asp-for="Name">Tên sản phẩm</label>
+                            <span asp-validation-for="Name" class="text-danger fs-7 mt-1 d-block"></span>
+                        </div>
+
+                        <div class="row">
+                            <!-- Product Price -->
+                            <div class="col-md-6">
+                                <div class="form-floating mb-4">
+                                    <input asp-for="Price" type="number" class="form-control rounded-3 border-secondary-subtle" placeholder="Giá bán" required />
+                                    <label asp-for="Price">Giá bán (đ)</label>
+                                    <span asp-validation-for="Price" class="text-danger fs-7 mt-1 d-block"></span>
+                                </div>
+                            </div>
+
+                            <!-- Product Category -->
+                            <div class="col-md-6">
+                                <div class="form-floating mb-4">
+                                    <select asp-for="CategoryId" class="form-select rounded-3 border-secondary-subtle" asp-items="ViewBag.Categories" required>
+                                        <option value="">-- Chọn danh mục --</option>
+                                    </select>
+                                    <label asp-for="CategoryId">Danh mục sản phẩm</label>
+                                    <span asp-validation-for="CategoryId" class="text-danger fs-7 mt-1 d-block"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product Description -->
+                        <div class="form-floating mb-4">
+                            <textarea asp-for="Description" class="form-control rounded-3 border-secondary-subtle" placeholder="Mô tả sản phẩm" style="height: 120px;"></textarea>
+                            <label asp-for="Description">Mô tả sản phẩm</label>
+                            <span asp-validation-for="Description" class="text-danger fs-7 mt-1 d-block"></span>
+                        </div>
+
+                        <!-- Product Image Upload -->
+                        <div class="mb-4">
+                            <label for="imageUrl" class="form-label fw-bold text-secondary">Ảnh sản phẩm</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-secondary-subtle"><i class="bi bi-cloud-upload text-muted"></i></span>
+                                <input type="file" name="imageUrl" id="imageUrl" class="form-control rounded-end border-secondary-subtle" accept="image/*" />
+                            </div>
+                            <small class="text-muted d-block mt-1">Độ phân giải khuyên dùng: 800x600px. Hỗ trợ các định dạng ảnh JPG, PNG, WEBP.</small>
+                        </div>
+
+                        <hr class="my-4 text-muted opacity-25" />
+
+                        <!-- Form Actions -->
+                        <div class="d-flex gap-2 justify-content-end">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill px-4 shadow">
+                                <i class="bi bi-check-lg me-2"></i>Lưu sản phẩm
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg rounded-pill px-4">
+                                Hủy bỏ
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

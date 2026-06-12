@@ -1,0 +1,72 @@
+@model Tuan3.Models.Order
+
+@{
+    ViewData["Title"] = "Thanh toán Đơn hàng";
+}
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0 rounded-4 p-4">
+                <h3 class="fw-bold text-primary mb-4"><i class="bi bi-wallet2 me-2"></i>Thông tin Giao hàng</h3>
+                <form asp-action="Checkout" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <input type="hidden" asp-for="ApplicationUserId" />
+                    
+                    <div class="mb-3">
+                        <label asp-for="ApplicationUser.FullName" class="form-label fw-semibold">Họ và tên người nhận</label>
+                        <input value="@Model.ApplicationUser?.FullName" class="form-control form-control-lg bg-light" readonly />
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ShippingAddress" class="form-label fw-semibold">Địa chỉ giao hàng</label>
+                        <textarea asp-for="ShippingAddress" class="form-control form-control-lg" rows="3" placeholder="Nhập địa chỉ chi tiết (số nhà, đường, phường/xã, quận/huyện...)"></textarea>
+                        <span asp-validation-for="ShippingAddress" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="PhoneNumber" class="form-label fw-semibold">Số điện thoại liên hệ</label>
+                        <input asp-for="PhoneNumber" class="form-control form-control-lg" placeholder="09xxxxxxx" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-lg rounded-pill shadow">Xác nhận Đặt hàng <i class="bi bi-check-circle ms-1"></i></button>
+                        <a asp-action="Index" class="btn btn-outline-secondary btn-lg rounded-pill">Quay lại Giỏ hàng</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-4 mt-4 mt-md-0">
+            <div class="card shadow-sm border-0 rounded-4 p-4 bg-light">
+                <h4 class="fw-bold mb-4">Tóm tắt Đơn hàng</h4>
+                <ul class="list-group list-group-flush bg-transparent mb-3">
+                    @foreach (var detail in Model.OrderDetails)
+                    {
+                        <li class="list-group-item bg-transparent px-0 d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="my-0">Sản phẩm #@detail.ProductId</h6>
+                                <small class="text-muted">SL: @detail.Count</small>
+                            </div>
+                            <span class="text-muted">@((detail.Price * detail.Count).ToString("#,##0")) đ</span>
+                        </li>
+                    }
+                </ul>
+                <hr>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="fw-bold fs-5">Tổng cộng</span>
+                    <strong class="text-success fs-3">@Model.TotalPrice.ToString("#,##0") đ</strong>
+                </div>
+                <div class="alert alert-info border-0 rounded-3 text-center mb-0" role="alert">
+                    <i class="bi bi-info-circle me-1"></i> Thanh toán khi nhận hàng (COD)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,49 @@
+@model Tuan3.Models.Category
+
+@{
+    ViewData["Title"] = "Thêm Danh Mục Mới";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none">Danh mục</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Thêm danh mục</li>
+                </ol>
+            </nav>
+
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="bg-primary text-white p-4">
+                    <h2 class="fw-bold mb-0">Thêm Danh mục Mới</h2>
+                    <p class="text-white-50 mb-0">Tạo một danh mục/bộ sưu tập mới để phân loại các sản phẩm của bạn.</p>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <form asp-action="Add" method="post" class="needs-validation">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <!-- Category Name -->
+                        <div class="form-floating mb-4">
+                            <input asp-for="Name" class="form-control rounded-3 border-secondary-subtle" placeholder="Tên danh mục" required />
+                            <label asp-for="Name">Tên danh mục</label>
+                            <span asp-validation-for="Name" class="text-danger fs-7 mt-1 d-block"></span>
+                        </div>
+
+                        <hr class="my-4 text-muted opacity-25" />
+
+                        <!-- Form Actions -->
+                        <div class="d-flex gap-2 justify-content-end">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill px-4 shadow">
+                                <i class="bi bi-check-lg me-2"></i>Lưu danh mục
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg rounded-pill px-4">
+                                Hủy bỏ
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

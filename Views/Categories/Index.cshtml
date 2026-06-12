@@ -1,0 +1,73 @@
+@model IEnumerable<Tuan3.Models.Category>
+
+@{
+    ViewData["Title"] = "Quản lý Danh mục";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="display-5 fw-bold text-primary mb-1">Danh mục</h1>
+            <p class="text-muted">Phân loại sản phẩm của bạn vào các bộ sưu tập tương ứng.</p>
+        </div>
+        <a asp-action="Add" class="btn btn-primary btn-lg shadow-sm rounded-pill px-4 hover-lift">
+            <i class="bi bi-plus-lg me-2"></i>Thêm Danh mục
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light text-uppercase fs-7 fw-bold text-secondary border-bottom">
+                    <tr>
+                        <th class="ps-4">Mã số</th>
+                        <th>Tên danh mục</th>
+                        <th>Số lượng sản phẩm</th>
+                        <th class="text-end pe-4">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center py-5 text-muted">
+                                <i class="bi bi-tag display-4 mb-3 d-block text-secondary"></i>
+                                Không có danh mục nào. Hãy nhấn nút phía trên để thêm mới.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var category in Model)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-semibold text-secondary">#@category.Id</td>
+                                <td>
+                                    <span class="fw-semibold text-dark fs-6">@category.Name</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle rounded-3 px-3 py-1.5">
+                                        @(category.Products?.Count ?? 0) sản phẩm
+                                    </span>
+                                </td>
+                                <td class="text-end pe-4">
+                                    <div class="btn-group gap-1">
+                                        <a asp-action="Display" asp-route-id="@category.Id" class="btn btn-outline-secondary btn-sm rounded-pill px-3" title="Xem sản phẩm">
+                                            <i class="bi bi-grid-3x3-gap"></i> Xem sản phẩm
+                                        </a>
+                                        <a asp-action="Update" asp-route-id="@category.Id" class="btn btn-outline-primary btn-sm rounded-pill px-3" title="Chỉnh sửa">
+                                            <i class="bi bi-pencil"></i> Sửa
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@category.Id" class="btn btn-outline-danger btn-sm rounded-pill px-3" title="Xóa">
+                                            <i class="bi bi-trash"></i> Xóa
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

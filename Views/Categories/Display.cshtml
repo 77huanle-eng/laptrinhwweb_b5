@@ -1,0 +1,82 @@
+@model Tuan3.Models.Category
+
+@{
+    ViewData["Title"] = "Danh mục: " + Model.Name;
+}
+
+<div class="container py-4">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none">Danh mục</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+        </ol>
+    </nav>
+
+    <div class="d-flex justify-content-between align-items-center mb-5 border-bottom pb-3">
+        <div>
+            <span class="text-uppercase text-primary fw-bold tracking-wider fs-7">Chi tiết danh mục</span>
+            <h1 class="display-5 fw-bold text-dark mt-1 mb-0">@Model.Name</h1>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-outline-primary rounded-pill px-4">
+                <i class="bi bi-pencil me-2"></i>Sửa danh mục
+            </a>
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+                <i class="bi bi-arrow-left me-2"></i>Quay lại danh mục
+            </a>
+        </div>
+    </div>
+
+    <h3 class="fw-bold text-dark mb-4">Các sản phẩm thuộc danh mục</h3>
+
+    @if (Model.Products == null || !Model.Products.Any())
+    {
+        <div class="card border-0 shadow-sm rounded-4 text-center py-5 text-muted">
+            <i class="bi bi-bag-x display-4 mb-3 d-block text-secondary"></i>
+            Chưa có sản phẩm nào thuộc danh mục này.
+            <div class="mt-4">
+                <a asp-controller="Product" asp-action="Add" class="btn btn-primary rounded-pill px-4 shadow">
+                    <i class="bi bi-plus-lg me-2"></i>Thêm sản phẩm mới vào danh mục
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var product in Model.Products)
+            {
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden card-hover">
+                        <div class="ratio ratio-4x3 bg-light position-relative">
+                            @if (!string.IsNullOrEmpty(product.ImageUrl))
+                            {
+                                <img src="@product.ImageUrl" alt="@product.Name" class="object-fit-cover transition-transform" />
+                            }
+                            else
+                            {
+                                <div class="d-flex align-items-center justify-content-center bg-light">
+                                    <i class="bi bi-image text-muted display-6"></i>
+                                </div>
+                            }
+                        </div>
+                        <div class="card-body p-4 d-flex flex-column justify-content-between">
+                            <div>
+                                <h5 class="fw-bold text-dark mb-2">@product.Name</h5>
+                                <p class="text-muted fs-7 text-truncate mb-3" style="max-height: 48px;">
+                                    @product.Description
+                                </p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                                <span class="fs-5 fw-bold text-success">@product.Price.ToString("#,##0") đ</span>
+                                <a asp-controller="Product" asp-action="Display" asp-route-id="@product.Id" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                                    Xem chi tiết <i class="bi bi-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

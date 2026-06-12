@@ -1,0 +1,50 @@
+@model Tuan3.Models.Category
+
+@{
+    ViewData["Title"] = "Chỉnh sửa danh mục - " + Model.Name;
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none">Danh mục</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Sửa danh mục</li>
+                </ol>
+            </nav>
+
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="bg-warning text-dark p-4">
+                    <h2 class="fw-bold mb-0">Chỉnh sửa danh mục</h2>
+                    <p class="text-black-50 mb-0">Cập nhật tên cho danh mục "@Model.Name".</p>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <form asp-action="Update" method="post" class="needs-validation">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        <input type="hidden" asp-for="Id" />
+
+                        <!-- Category Name -->
+                        <div class="form-floating mb-4">
+                            <input asp-for="Name" class="form-control rounded-3 border-secondary-subtle" placeholder="Tên danh mục" required />
+                            <label asp-for="Name">Tên danh mục</label>
+                            <span asp-validation-for="Name" class="text-danger fs-7 mt-1 d-block"></span>
+                        </div>
+
+                        <hr class="my-4 text-muted opacity-25" />
+
+                        <!-- Form Actions -->
+                        <div class="d-flex gap-2 justify-content-end">
+                            <button type="submit" class="btn btn-warning btn-lg rounded-pill px-4 text-dark fw-bold shadow">
+                                <i class="bi bi-save me-2"></i>Lưu thay đổi
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg rounded-pill px-4">
+                                Hủy bỏ
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

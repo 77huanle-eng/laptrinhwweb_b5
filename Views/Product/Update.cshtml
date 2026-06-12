@@ -1,0 +1,117 @@
+@model Tuan3.Models.Product
+
+@{
+    ViewData["Title"] = "Chỉnh sửa sản phẩm - " + Model.Name;
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none">Sản phẩm</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Sửa sản phẩm</li>
+                </ol>
+            </nav>
+
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="bg-warning text-dark p-4">
+                    <h2 class="fw-bold mb-0">Chỉnh sửa sản phẩm</h2>
+                    <p class="text-black-50 mb-0">Cập nhật thông tin chi tiết cho sản phẩm "@Model.Name".</p>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <form asp-action="Update" method="post" enctype="multipart/form-data" class="needs-validation">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        <input type="hidden" asp-for="Id" />
+
+                        <!-- Product Name -->
+                        <div class="form-floating mb-4">
+                            <input asp-for="Name" class="form-control rounded-3 border-secondary-subtle" placeholder="Tên sản phẩm" required />
+                            <label asp-for="Name">Tên sản phẩm</label>
+                            <span asp-validation-for="Name" class="text-danger fs-7 mt-1 d-block"></span>
+                        </div>
+
+                        <div class="row">
+                            <!-- Product Price -->
+                            <div class="col-md-6">
+                                <div class="form-floating mb-4">
+                                    <input asp-for="Price" type="number" class="form-control rounded-3 border-secondary-subtle" placeholder="Giá bán" required />
+                                    <label asp-for="Price">Giá bán (đ)</label>
+                                    <span asp-validation-for="Price" class="text-danger fs-7 mt-1 d-block"></span>
+                                </div>
+                            </div>
+
+                            <!-- Product Category -->
+                            <div class="col-md-6">
+                                <div class="form-floating mb-4">
+                                    <select asp-for="CategoryId" class="form-select rounded-3 border-secondary-subtle" asp-items="ViewBag.Categories" required>
+                                        <option value="">-- Chọn danh mục --</option>
+                                    </select>
+                                    <label asp-for="CategoryId">Danh mục sản phẩm</label>
+                                    <span asp-validation-for="CategoryId" class="text-danger fs-7 mt-1 d-block"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product Description -->
+                        <div class="form-floating mb-4">
+                            <textarea asp-for="Description" class="form-control rounded-3 border-secondary-subtle" placeholder="Mô tả sản phẩm" style="height: 120px;"></textarea>
+                            <label asp-for="Description">Mô tả sản phẩm</label>
+                            <span asp-validation-for="Description" class="text-danger fs-7 mt-1 d-block"></span>
+                        </div>
+
+                        <!-- Image File Upload & Live Preview -->
+                        <div class="row mb-4 align-items-center">
+                            <div class="col-md-8">
+                                <label for="imageInput" class="form-label fw-bold text-secondary">Thay đổi ảnh sản phẩm</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-secondary-subtle"><i class="bi bi-cloud-upload text-muted"></i></span>
+                                    <input type="file" name="imageUrl" id="imageInput" class="form-control rounded-end border-secondary-subtle" accept="image/*" />
+                                </div>
+                                <small class="text-muted d-block mt-1">Để trống nếu muốn giữ nguyên hình ảnh hiện tại.</small>
+                            </div>
+                            <div class="col-md-4 text-center mt-3 mt-md-0">
+                                <div class="ratio ratio-1x1 mx-auto rounded-3 border shadow-sm overflow-hidden" style="width: 100px; height: 100px;">
+                                    <img src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "/images/placeholder.png" : Model.ImageUrl)" alt="Image Preview" id="previewImage" class="object-fit-cover" />
+                                </div>
+                                <small class="text-muted d-block mt-1">Ảnh xem trước</small>
+                            </div>
+                        </div>
+
+                        <hr class="my-4 text-muted opacity-25" />
+
+                        <!-- Form Actions -->
+                        <div class="d-flex gap-2 justify-content-end">
+                            <button type="submit" class="btn btn-warning btn-lg rounded-pill px-4 text-dark fw-bold shadow">
+                                <i class="bi bi-save me-2"></i>Lưu thay đổi
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg rounded-pill px-4">
+                                Hủy bỏ
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const img = document.getElementById("previewImage")
+                        if (img) {
+                            img.src = e.target.result;
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
+}

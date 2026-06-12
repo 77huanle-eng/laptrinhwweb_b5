@@ -1,0 +1,21 @@
+@{
+    ViewData["Title"] = "Đặt hàng Thành công";
+}
+
+<div class="container py-5 text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card border-0 shadow-lg rounded-4 p-5 text-center">
+                <i class="bi bi-check-circle-fill text-success" style="font-size: 5rem;"></i>
+                <h1 class="display-5 fw-bold mt-4 mb-3">Thành công!</h1>
+                <p class="lead text-muted mb-4">Cảm ơn bạn đã đặt hàng. Đơn hàng của bạn đã được ghi nhận và sẽ sớm được xử lý. Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.</p>
+                
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-lg px-4 gap-3 rounded-pill shadow">
+                        <i class="bi bi-cart"></i> Tiếp tục mua sắm
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+@model Tuan3.Models.Product
+
+@{
+    ViewData["Title"] = "Xóa Sản Phẩm - " + Model.Name;
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a asp-action="Index" class="text-decoration-none">Sản phẩm</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Xóa sản phẩm</li>
+                </ol>
+            </nav>
+
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="bg-danger text-white p-4 text-center">
+                    <i class="bi bi-exclamation-triangle display-3 mb-2 d-block"></i>
+                    <h2 class="fw-bold mb-0">Bạn chắc chắn chứ?</h2>
+                    <p class="text-white-50 mb-0">Hành động này không thể hoàn tác. Bạn có thực sự muốn xóa sản phẩm này?</p>
+                </div>
+                <div class="card-body p-4 text-center">
+                    <div class="ratio ratio-1x1 mx-auto rounded-3 border shadow-sm overflow-hidden mb-3" style="width: 120px; height: 120px;">
+                        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                        {
+                            <img src="@Model.ImageUrl" alt="@Model.Name" class="object-fit-cover" />
+                        }
+                        else
+                        {
+                            <div class="bg-light d-flex align-items-center justify-content-center">
+                                <i class="bi bi-image text-muted fs-2"></i>
+                            </div>
+                        }
+                    </div>
+                    <h4 class="fw-bold text-dark mb-1">@Model.Name</h4>
+                    @if (Model.Category != null)
+                    {
+                        <span class="badge bg-secondary mb-3">@Model.Category.Name</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary mb-3">Chưa phân loại</span>
+                    }
+
+                    <p class="text-danger fw-bold fs-5 mb-4">
+                        Giá bán: @Model.Price.ToString("#,##0") đ
+                    </p>
+
+                    <form asp-action="DeleteConfirmed" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger btn-lg rounded-pill shadow">
+                                <i class="bi bi-trash-fill me-2"></i>Xác nhận Xóa
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary btn-lg rounded-pill">
+                                Hủy bỏ
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
